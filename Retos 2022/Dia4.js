@@ -39,13 +39,12 @@
 // Las cajas no son siempre cuadradas, pueden ser rectangulares.
 
 function fitsInOneBox(boxes) {
-    boxes.sort((a,b) => {
-        if(a.h - b.h) return a.h - b.h
-        if(a.w - b.w) return a.w - b.w
-        return a.l - b.l
+    return boxes
+    .sort((a,b) => (b.l + b.h + b.w) - (a.l + a.h + a.w))
+    .slice(1)
+    .every((box,index)=>{
+        return box.l < boxes[index].l &&
+        box.h < boxes[index].h &&
+        box.w < boxes[index].w
     })
-    for (let i = 0; i < boxes.length - 1; i++) {
-        if(boxes[i].l >= boxes[i+1].l || boxes[i].w >= boxes[i+1].w || boxes[i].h >= boxes[i+1].h) return false
-    }
-    return true
 }
